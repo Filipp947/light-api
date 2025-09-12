@@ -43,9 +43,7 @@ export default function handler(req, res) {
       }
     }
 
-    if (objs.length === 0) {
-      return res.status(500).json({ error: "no full objects found in chunk" })
-    }
+    
 
     // pick a truly random joke from the chunk
     const randomJoke = objs[Math.floor(Math.random() * objs.length)]
