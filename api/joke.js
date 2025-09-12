@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const stat = fs.statSync(filePath)
     const fileSize = stat.size
 
-    // pick a random start offset, leave margin to avoid trailing ']'
+    // pick a random offset (avoid very end of file)
     const offset = Math.floor(Math.random() * (fileSize - 1024 * 1024))
 
     const fd = fs.openSync(filePath, "r")
@@ -17,27 +17,38 @@ export default async function handler(req, res) {
 
     const chunk = buffer.toString("utf-8")
 
-    // find first { after our offset
-    const start = chunk.indexOf("{")
-    // find closing } after that
-    const end = chunk.indexOf("}", start)
+    // scan for all { ... } objects
+    let objs = []
+    let depth = 0
+    let start = -1
 
-    if (start === -1 || end === -1) {
-      return res.status(500).json({ error: "could not locate full object" })
+    for (let i = 0; i < chunk.length; i++) {
+      const c = chunk[i]
+
+      if (c === "{") {
+        if (depth === 0) start = i
+        depth++
+      } else if (c === "}") {
+        depth--
+        if (depth === 0 && start !== -1) {
+          const raw = chunk.slice(start, i + 1)
+          try {
+            const obj = JSON.parse(raw)
+            objs.push(obj)
+          } catch {
+            // skip broken fragments
+          }
+          start = -1
+        }
+      }
     }
 
-    // try to parse just that one object
-    const rawObj = chunk.slice(start, end + 1)
-
-    let joke
-    try {
-      joke = JSON.parse(rawObj)
-    } catch (e) {
-      console.error("parse failed", e)
-      return res.status(500).json({ error: "failed to parse object" })
+    if (objs.length === 0) {
+      return res.status(500).json({ error: "no full objects in chunk" })
     }
 
-    res.status(200).json(joke)
+    const randomJoke = objs[Math.floor(Math.random() * objs.length)]
+    res.status(200).json(randomJoke)
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: "unexpected error" })
