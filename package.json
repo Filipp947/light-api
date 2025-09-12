@@ -1,0 +1,7 @@
+{
+  "name": "my-json-api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}
