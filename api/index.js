@@ -1,7 +1,10 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { createRequire } from "module";
 
-module.exports = async (req, res) => {
+const require = createRequire(import.meta.url);
+
+export default async function handler(req, res) {
   try {
     const route = req.url.split("?")[0].replace(/^\/api\/?/, "");
     const q = new URL(req.url, `http://${req.headers.host}`).searchParams.get("q") || "";
@@ -9,8 +12,16 @@ module.exports = async (req, res) => {
     const filePath = path.join(process.cwd(), "files", `${route}.js`);
     if (!fs.existsSync(filePath)) return res.status(404).json({ error: "Unknown endpoint" });
 
-    const mod = require(filePath); // works with CommonJS
-    const fn = typeof mod === "function" ? mod : mod.default;
+    // try dynamic import first (ESM)
+    let fn;
+    try {
+      const mod = await import(`file://${filePath}`);
+      fn = mod.default || mod;
+    } catch {
+      // fallback to require (CommonJS)
+      const mod = require(filePath);
+      fn = mod.default || mod;
+    }
 
     if (!fn || typeof fn !== "function") return res.status(500).json({ error: "Module does not export a function" });
 
@@ -24,4 +35,4 @@ module.exports = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
-};
+}
