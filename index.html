@@ -5,43 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Light API</title>
 <style>
-  /* basic reset */
   * {margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
   body {
     min-height: 100vh;
-    background: radial-gradient(ellipse at bottom, #0b0f2f 0%, #000000 100%);
+    background: radial-gradient(ellipse at bottom, #1a0033 0%, #0b0018 100%);
     overflow-x: hidden;
     color: #ffffff;
+    position: relative;
   }
-  /* stars animation */
-  body::before, body::after {
-    content:"";position:absolute;top:0;left:0;width:100%;height:100%;
-    background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><circle cx="1" cy="1" r="1" fill="white"/></svg>') repeat;
-    animation: stars 100s linear infinite;
-    z-index:0;
-    opacity:0.6;
-  }
-  body::after {animation-duration:200s;opacity:0.3;}
-  @keyframes stars {from{transform:translateY(0);}to{transform:translateY(-2000px);}}
   
   main {position:relative; z-index:1; padding:3rem 1rem; max-width:1000px; margin:0 auto;}
-  h1 {text-align:center; font-size:3rem; margin-bottom:2rem; color:#f0f0ff; text-shadow:0 0 10px #ffffff;}
-  .section {background: rgba(20,25,50,0.6); margin-bottom:2rem; padding:1.5rem; border-radius:20px; box-shadow:0 0 20px rgba(255,255,255,0.2); animation:fadeIn 1s ease;}
-  .section h2 {font-size:1.8rem; color:#a0c0ff; margin-bottom:0.5rem;}
-  .section p {margin-bottom:1rem; line-height:1.4; color:#d0d0ff;}
+  h1 {text-align:center; font-size:3rem; margin-bottom:2rem; color:#e0c0ff; text-shadow:0 0 15px #ffbaff;}
+  
+  .section {
+    background: rgba(50,10,60,0.6);
+    margin-bottom:2rem;
+    padding:1.5rem;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(255,100,255,0.2);
+    animation:fadeIn 1s ease;
+  }
+  
+  .section h2 {font-size:1.8rem; color:#ff99ff; margin-bottom:0.5rem;}
+  .section p {margin-bottom:1rem; line-height:1.4; color:#d0b0ff;}
+  
   .buttons {display:flex; gap:1rem; flex-wrap:wrap;}
   .buttons button {
     padding:0.6rem 1rem; border:none; border-radius:12px; cursor:pointer;
-    font-weight:600; transition:0.3s; color:#0b0f2f;
-    background:linear-gradient(135deg,#a0c0ff,#80ffea);
+    font-weight:600; transition:0.3s; color:#1a001f;
+    background:linear-gradient(135deg,#d580ff,#ff66ff);
     box-shadow:0 5px 15px rgba(0,0,0,0.3);
   }
   .buttons button:hover {transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.5);}
-  .copy-btn {background:linear-gradient(135deg,#ff9d9d,#ffec80);}
+  .copy-btn {background:linear-gradient(135deg,#ff66ff,#ffb3ff);}
   
   @keyframes fadeIn {from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
   
-  /* floating background stars */
   .star {position:absolute; width:2px; height:2px; background:white; border-radius:50%; opacity:0.8; animation:twinkle linear infinite;}
 </style>
 </head>
