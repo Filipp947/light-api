@@ -13,10 +13,8 @@
     color: #ffffff;
     position: relative;
   }
-  
   main {position:relative; z-index:1; padding:3rem 1rem; max-width:1000px; margin:0 auto;}
   h1 {text-align:center; font-size:3rem; margin-bottom:2rem; color:#e0c0ff; text-shadow:0 0 15px #ffbaff;}
-  
   .section {
     background: rgba(50,10,60,0.6);
     margin-bottom:2rem;
@@ -25,10 +23,8 @@
     box-shadow:0 0 20px rgba(255,100,255,0.2);
     animation:fadeIn 1s ease;
   }
-  
   .section h2 {font-size:1.8rem; color:#ff99ff; margin-bottom:0.5rem;}
   .section p {margin-bottom:1rem; line-height:1.4; color:#d0b0ff;}
-  
   .buttons {display:flex; gap:1rem; flex-wrap:wrap;}
   .buttons button {
     padding:0.6rem 1rem; border:none; border-radius:12px; cursor:pointer;
@@ -38,10 +34,16 @@
   }
   .buttons button:hover {transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.5);}
   .copy-btn {background:linear-gradient(135deg,#ff66ff,#ffb3ff);}
-  
   @keyframes fadeIn {from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
-  
-  .star {position:absolute; width:2px; height:2px; background:white; border-radius:50%; opacity:0.8; animation:twinkle linear infinite;}
+  .star {
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:0;
+    animation-name:twinkle;
+    animation-iteration-count:infinite;
+  }
+  @keyframes twinkle {0%,100%{opacity:0.1;}50%{opacity:0.8;}}
 </style>
 </head>
 <body>
@@ -95,30 +97,53 @@ endpoints.forEach(ep => {
   const copyBtn = document.createElement("button");
   copyBtn.textContent = "Copy Endpoint";
   copyBtn.className = "copy-btn";
-  copyBtn.onclick = () => {
-    navigator.clipboard.writeText(ep.url).then(()=>alert("Copied!"));
-  };
+  copyBtn.onclick = () => navigator.clipboard.writeText(ep.url).then(()=>alert("Copied!"));
   
   buttons.appendChild(exampleBtn);
   buttons.appendChild(copyBtn);
-  
   section.appendChild(h2);
   section.appendChild(p);
   section.appendChild(buttons);
-  
   container.appendChild(section);
 });
 
-// optional: floating small stars
-for(let i=0;i<100;i++){
-  const star = document.createElement("div");
-  star.className="star";
-  star.style.left = Math.random()*100+"%";
-  star.style.top = Math.random()*100+"%";
-  star.style.width = star.style.height = Math.random()*2+1+"px";
-  star.style.animationDuration = 5+Math.random()*15+"s";
-  document.body.appendChild(star);
+// animated glowing stars
+class Star {
+  constructor() {
+    this.star = document.createElement("div");
+    this.star.className = "star";
+    this.reset();
+    document.body.appendChild(this.star);
+  }
+  reset() {
+    this.x = Math.random() * window.innerWidth;
+    this.y = Math.random() * window.innerHeight;
+    this.size = Math.random()*2+1;
+    this.star.style.width = this.star.style.height = this.size+"px";
+    this.star.style.left = this.x+"px";
+    this.star.style.top = this.y+"px";
+    this.speedX = (Math.random()-0.5)*0.05;
+    this.speedY = (Math.random()-0.5)*0.05;
+    this.opacity = Math.random()*0.8+0.2;
+    this.glowDir = Math.random()>0.5?1:-1;
+  }
+  move() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.star.style.left = this.x+"px";
+    this.star.style.top = this.y+"px";
+    this.opacity += 0.005*this.glowDir;
+    if(this.opacity > 0.9 || this.opacity < 0.1) this.glowDir*=-1;
+    this.star.style.opacity = this.opacity;
+    if(this.x<0||this.x>window.innerWidth||this.y<0||this.y>window.innerHeight) this.reset();
+  }
 }
+
+const stars = [];
+for(let i=0;i<120;i++) stars.push(new Star());
+
+function animateStars(){stars.forEach(s=>s.move()); requestAnimationFrame(animateStars);}
+animateStars();
 </script>
 </body>
 </html>
