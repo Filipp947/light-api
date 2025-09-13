@@ -53,7 +53,7 @@
 </main>
 
 <script>
-const endpoints = [
+[
   {"name":"Text to Morse","desc":"Converts plain text into Morse code. Spaces are converted to '/'.","example":"hello+guys","url":"https://light-api.vercel.app/api/ttm?q="},
   {"name":"Morse to Text","desc":"Converts Morse code back into readable text. Use '/' for spaces.","example":".... . .-.. .-.. --- / --. ..- -.-- ...","url":"https://light-api.vercel.app/api/mtt?q="},
   {"name":"Leetspeak Conversion","desc":"Converts letters into leet style. a→4, e→3 etc.","example":"hello","url":"https://light-api.vercel.app/api/leet?q="},
@@ -63,17 +63,37 @@ const endpoints = [
   {"name":"Uppercase","desc":"Converts all letters to uppercase.","example":"hello","url":"https://light-api.vercel.app/api/uppercase?q="},
   {"name":"Lowercase","desc":"Converts all letters to lowercase.","example":"HELLO","url":"https://light-api.vercel.app/api/lowercase?q="},
   {"name":"Reverse Text","desc":"Reverses the input string.","example":"hello","url":"https://light-api.vercel.app/api/reverse?q="},
+  {"name":"Reverse Words","desc":"Reverses the order of words in the input.","example":"hello world","url":"https://light-api.vercel.app/api/reversewords?q="},
   {"name":"UwU Text","desc":"Converts normal text into uwu style.","example":"hello","url":"https://light-api.vercel.app/api/uwuify?q="},
+  {"name":"Vaporwave Text","desc":"Converts text into spaced out vaporwave style.","example":"hello","url":"https://light-api.vercel.app/api/vaporwave?q="},
+  {"name":"Zalgo Text","desc":"Adds Zalgo unicode effects to text.","example":"hello","url":"https://light-api.vercel.app/api/zalgo?q="},
   {"name":"Text to Hex","desc":"Converts text into hexadecimal.","example":"hello","url":"https://light-api.vercel.app/api/hex?q="},
   {"name":"Fancy Unicode","desc":"Converts text into bold/fancy unicode letters.","example":"hello","url":"https://light-api.vercel.app/api/unicode?q="},
   {"name":"Decimal to Binary","desc":"Converts decimal numbers into binary strings.","example":"5","url":"https://light-api.vercel.app/api/ntr?q="},
   {"name":"Binary to Decimal","desc":"Converts binary strings into decimal numbers.","example":"101","url":"https://light-api.vercel.app/api/btd?q="},
-  {"name":"Number to Roman","desc":"Converts numbers into Roman numerals.","example":"123","url":"https://light-api.vercel.app/api/number-to-roman?q="},
-  {"name":"Roman to Number","desc":"Converts Roman numerals into numbers.","example":"CXXIII","url":"https://light-api.vercel.app/api/roman-to-number?q="},
-  {"name":"Word Count","desc":"Counts words & characters in input.","example":"hello world","url":"https://light-api.vercel.app/api/wordcount?q="},
-  {"name":"Palindrome Check","desc":"Checks if input is palindrome.","example":"Madam","url":"https://light-api.vercel.app/api/palindrome?q="},
+  {"name":"Decimal to Octal","desc":"Converts decimal numbers into octal strings.","example":"10","url":"https://light-api.vercel.app/api/dto?q="},
+  {"name":"Octal to Decimal","desc":"Converts octal strings into decimal numbers.","example":"12","url":"https://light-api.vercel.app/api/otd?q="},
+  {"name":"Even or Odd","desc":"Determines whether a number is even or odd.","example":"5","url":"https://light-api.vercel.app/api/evenodd?q="},
+  {"name":"Factorial","desc":"Calculates the factorial of a number.","example":"5","url":"https://light-api.vercel.app/api/factorial?q="},
+  {"name":"Fibonacci","desc":"Returns the first n Fibonacci numbers.","example":"5","url":"https://light-api.vercel.app/api/fibonacci?q="},
+  {"name":"GCD / LCM","desc":"Returns the GCD and LCM of two numbers.","example":"12,18","url":"https://light-api.vercel.app/api/gdlcm?q="},
+  {"name":"Isogram Check","desc":"Checks if a word is an isogram (no repeating letters).","example":"background","url":"https://light-api.vercel.app/api/isogram?q="},
+  {"name":"Longest Word","desc":"Finds the longest word in a string.","example":"hello world","url":"https://light-api.vercel.app/api/longestword?q="},
+  {"name":"Shortest Word","desc":"Finds the shortest word in a string.","example":"hello world","url":"https://light-api.vercel.app/api/shortestword?q="},
+  {"name":"Sentences Split","desc":"Splits text into sentences.","example":"Hello world. How are you?","url":"https://light-api.vercel.app/api/sentences?q="},
+  {"name":"Character Frequency","desc":"Counts frequency of each character in text.","example":"hello","url":"https://light-api.vercel.app/api/charfrequency?q="},
+  {"name":"Percentage Calculator","desc":"Calculates the percentage of a number.","example":"50,200","url":"https://light-api.vercel.app/api/percentage?q="},
+  {"name":"Random Number","desc":"Generates a random number between min and max.","example":"1,100","url":"https://light-api.vercel.app/api/randomnumber?q="},
+  {"name":"Temperature Converter","desc":"Converts temperatures between Celsius and Fahrenheit.","example":"32C","url":"https://light-api.vercel.app/api/temp?q="},
+  {"name":"No Vowels","desc":"Removes all vowels from the input text.","example":"hello","url":"https://light-api.vercel.app/api/novowels?q="},
+  {"name":"Link Extractor","desc":"Extracts all URLs from input text.","example":"Check this https://example.com","url":"https://light-api.vercel.app/api/linkextractor?q="},
+  {"name":"Mention Extractor","desc":"Extracts all @mentions from input text.","example":"Hello @user","url":"https://light-api.vercel.app/api/mentionextractor?q="},
+  {"name":"Joke","desc":"Returns a random joke.","example":"","url":"https://light-api.vercel.app/api/joke?q="},
+  {"name":"Most Frequent Word","desc":"Finds the most frequently occurring word in a text.","example":"hello hello world","url":"https://light-api.vercel.app/api/mfw?q="},
+  {"name":"Reading Time","desc":"Estimates reading time for a text in minutes.","example":"hello world","url":"https://light-api.vercel.app/api/readingtime?q="},
   {"name":"Text Length","desc":"Returns the number of characters in input.","example":"hello","url":"https://light-api.vercel.app/api/length?q="}
-];
+]
+
 
 const container = document.getElementById("sections");
 
