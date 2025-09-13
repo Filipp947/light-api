@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Light API</title>
+    <style>
+      body {
+        background: linear-gradient(135deg, #0d0d2b, #1a1a40);
+        color: #fff;
+        font-family: sans-serif;
+        text-align: center;
+        padding: 2rem;
+      }
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+      .endpoint {
+        margin: 1rem 0;
+      }
+      button {
+        background: #3a3aff;
+        border: none;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #5757ff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>✨ Light API ✨</h1>
+    <p>Click below to test endpoints:</p>
+    <div id="endpoints"></div>
+
+    <script>
+      const endpoints = [
+        { name: "Text → Morse", path: "/api/ttm?q=hello" },
+        { name: "Morse → Text", path: "/api/mtt?q=.... . .-.. .-.. ---" },
+        { name: "Leetify", path: "/api/leet?q=hello" },
+      ];
+
+      const container = document.getElementById("endpoints");
+      endpoints.forEach(e => {
+        const div = document.createElement("div");
+        div.className = "endpoint";
+        div.innerHTML = `<button onclick="window.open('${e.path}','_blank')">${e.name}</button>`;
+        container.appendChild(div);
+      });
+    </script>
+  </body>
+</html>
