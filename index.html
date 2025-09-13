@@ -1,54 +1,125 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Light API</title>
-    <style>
-      body {
-        background: linear-gradient(135deg, #0d0d2b, #1a1a40);
-        color: #fff;
-        font-family: sans-serif;
-        text-align: center;
-        padding: 2rem;
-      }
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
-      .endpoint {
-        margin: 1rem 0;
-      }
-      button {
-        background: #3a3aff;
-        border: none;
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 10px;
-        cursor: pointer;
-      }
-      button:hover {
-        background: #5757ff;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>✨ Light API ✨</h1>
-    <p>Click below to test endpoints:</p>
-    <div id="endpoints"></div>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Light API</title>
+<style>
+  /* basic reset */
+  * {margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+  body {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at bottom, #0b0f2f 0%, #000000 100%);
+    overflow-x: hidden;
+    color: #ffffff;
+  }
+  /* stars animation */
+  body::before, body::after {
+    content:"";position:absolute;top:0;left:0;width:100%;height:100%;
+    background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><circle cx="1" cy="1" r="1" fill="white"/></svg>') repeat;
+    animation: stars 100s linear infinite;
+    z-index:0;
+    opacity:0.6;
+  }
+  body::after {animation-duration:200s;opacity:0.3;}
+  @keyframes stars {from{transform:translateY(0);}to{transform:translateY(-2000px);}}
+  
+  main {position:relative; z-index:1; padding:3rem 1rem; max-width:1000px; margin:0 auto;}
+  h1 {text-align:center; font-size:3rem; margin-bottom:2rem; color:#f0f0ff; text-shadow:0 0 10px #ffffff;}
+  .section {background: rgba(20,25,50,0.6); margin-bottom:2rem; padding:1.5rem; border-radius:20px; box-shadow:0 0 20px rgba(255,255,255,0.2); animation:fadeIn 1s ease;}
+  .section h2 {font-size:1.8rem; color:#a0c0ff; margin-bottom:0.5rem;}
+  .section p {margin-bottom:1rem; line-height:1.4; color:#d0d0ff;}
+  .buttons {display:flex; gap:1rem; flex-wrap:wrap;}
+  .buttons button {
+    padding:0.6rem 1rem; border:none; border-radius:12px; cursor:pointer;
+    font-weight:600; transition:0.3s; color:#0b0f2f;
+    background:linear-gradient(135deg,#a0c0ff,#80ffea);
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  }
+  .buttons button:hover {transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.5);}
+  .copy-btn {background:linear-gradient(135deg,#ff9d9d,#ffec80);}
+  
+  @keyframes fadeIn {from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  
+  /* floating background stars */
+  .star {position:absolute; width:2px; height:2px; background:white; border-radius:50%; opacity:0.8; animation:twinkle linear infinite;}
+</style>
+</head>
+<body>
+<main>
+  <h1>Light API</h1>
+  <div id="sections"></div>
+</main>
 
-    <script>
-      const endpoints = [
-        { name: "Text → Morse", path: "/api/ttm?q=hello" },
-        { name: "Morse → Text", path: "/api/mtt?q=.... . .-.. .-.. ---" },
-        { name: "Leetify", path: "/api/leet?q=hello" },
-      ];
+<script>
+const endpoints = [
+  {"name":"Text to Morse","desc":"Converts plain text into Morse code. Spaces are converted to '/'.","example":"hello+guys","url":"https://light-api.vercel.app/api/ttm?q="},
+  {"name":"Morse to Text","desc":"Converts Morse code back into readable text. Use '/' for spaces.","example":".... . .-.. .-.. --- / --. ..- -.-- ...","url":"https://light-api.vercel.app/api/mtt?q="},
+  {"name":"Leetspeak Conversion","desc":"Converts letters into leet style. a→4, e→3 etc.","example":"hello","url":"https://light-api.vercel.app/api/leet?q="},
+  {"name":"ROT13 Cipher","desc":"Applies the ROT13 Caesar cipher to text.","example":"hello","url":"https://light-api.vercel.app/api/rot13?q="},
+  {"name":"Base64 Encode","desc":"Converts text into Base64 encoding.","example":"hello","url":"https://light-api.vercel.app/api/b64ify?q="},
+  {"name":"Base64 Decode","desc":"Converts Base64 back into text.","example":"aGVsbG8=","url":"https://light-api.vercel.app/api/unb64ify?q="},
+  {"name":"Uppercase","desc":"Converts all letters to uppercase.","example":"hello","url":"https://light-api.vercel.app/api/uppercase?q="},
+  {"name":"Lowercase","desc":"Converts all letters to lowercase.","example":"HELLO","url":"https://light-api.vercel.app/api/lowercase?q="},
+  {"name":"Reverse Text","desc":"Reverses the input string.","example":"hello","url":"https://light-api.vercel.app/api/reverse?q="},
+  {"name":"UwU Text","desc":"Converts normal text into uwu style.","example":"hello","url":"https://light-api.vercel.app/api/uwuify?q="},
+  {"name":"Text to Hex","desc":"Converts text into hexadecimal.","example":"hello","url":"https://light-api.vercel.app/api/hex?q="},
+  {"name":"Fancy Unicode","desc":"Converts text into bold/fancy unicode letters.","example":"hello","url":"https://light-api.vercel.app/api/unicode?q="},
+  {"name":"Decimal to Binary","desc":"Converts decimal numbers into binary strings.","example":"5","url":"https://light-api.vercel.app/api/ntr?q="},
+  {"name":"Binary to Decimal","desc":"Converts binary strings into decimal numbers.","example":"101","url":"https://light-api.vercel.app/api/btd?q="},
+  {"name":"Number to Roman","desc":"Converts numbers into Roman numerals.","example":"123","url":"https://light-api.vercel.app/api/number-to-roman?q="},
+  {"name":"Roman to Number","desc":"Converts Roman numerals into numbers.","example":"CXXIII","url":"https://light-api.vercel.app/api/roman-to-number?q="},
+  {"name":"Word Count","desc":"Counts words & characters in input.","example":"hello world","url":"https://light-api.vercel.app/api/wordcount?q="},
+  {"name":"Palindrome Check","desc":"Checks if input is palindrome.","example":"Madam","url":"https://light-api.vercel.app/api/palindrome?q="},
+  {"name":"Text Length","desc":"Returns the number of characters in input.","example":"hello","url":"https://light-api.vercel.app/api/length?q="}
+];
 
-      const container = document.getElementById("endpoints");
-      endpoints.forEach(e => {
-        const div = document.createElement("div");
-        div.className = "endpoint";
-        div.innerHTML = `<button onclick="window.open('${e.path}','_blank')">${e.name}</button>`;
-        container.appendChild(div);
-      });
-    </script>
-  </body>
+const container = document.getElementById("sections");
+
+endpoints.forEach(ep => {
+  const section = document.createElement("div");
+  section.className = "section";
+  
+  const h2 = document.createElement("h2");
+  h2.textContent = ep.name;
+  
+  const p = document.createElement("p");
+  p.textContent = ep.desc;
+  
+  const buttons = document.createElement("div");
+  buttons.className = "buttons";
+  
+  const exampleBtn = document.createElement("button");
+  exampleBtn.textContent = "Example";
+  exampleBtn.onclick = () => window.open(ep.url + encodeURIComponent(ep.example), "_blank");
+  
+  const copyBtn = document.createElement("button");
+  copyBtn.textContent = "Copy Endpoint";
+  copyBtn.className = "copy-btn";
+  copyBtn.onclick = () => {
+    navigator.clipboard.writeText(ep.url).then(()=>alert("Copied!"));
+  };
+  
+  buttons.appendChild(exampleBtn);
+  buttons.appendChild(copyBtn);
+  
+  section.appendChild(h2);
+  section.appendChild(p);
+  section.appendChild(buttons);
+  
+  container.appendChild(section);
+});
+
+// optional: floating small stars
+for(let i=0;i<100;i++){
+  const star = document.createElement("div");
+  star.className="star";
+  star.style.left = Math.random()*100+"%";
+  star.style.top = Math.random()*100+"%";
+  star.style.width = star.style.height = Math.random()*2+1+"px";
+  star.style.animationDuration = 5+Math.random()*15+"s";
+  document.body.appendChild(star);
+}
+</script>
+</body>
 </html>
