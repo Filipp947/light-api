@@ -8,15 +8,15 @@
   * {margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
   body {
     min-height: 100vh;
-    background: radial-gradient(ellipse at bottom, #1a0033 0%, #0b0018 100%);
+    background: radial-gradient(ellipse at bottom, #220044 0%, #0b0018 100%);
     overflow-x: hidden;
     color: #ffffff;
     position: relative;
   }
   main {position:relative; z-index:1; padding:3rem 1rem; max-width:1000px; margin:0 auto;}
-  h1 {text-align:center; font-size:3rem; margin-bottom:2rem; color:#e0c0ff; text-shadow:0 0 15px #ffbaff;}
+  h1 {text-align:center; font-size:3rem; margin-bottom:2rem; color:#d8b0ff; text-shadow:0 0 15px #ff99ff;}
   .section {
-    background: rgba(50,10,60,0.6);
+    background: rgba(60,20,80,0.6);
     margin-bottom:2rem;
     padding:1.5rem;
     border-radius:20px;
@@ -53,72 +53,72 @@
 </main>
 
 <script>
-[
-  {"name":"Text to Morse","desc":"Converts plain text into Morse code. Spaces are converted to '/'.","example":"hello+guys","url":"https://light-api.vercel.app/api/ttm?q="},
-  {"name":"Morse to Text","desc":"Converts Morse code back into readable text. Use '/' for spaces.","example":".... . .-.. .-.. --- / --. ..- -.-- ...","url":"https://light-api.vercel.app/api/mtt?q="},
-  {"name":"Leetspeak Conversion","desc":"Converts letters into leet style. a→4, e→3 etc.","example":"hello","url":"https://light-api.vercel.app/api/leet?q="},
-  {"name":"ROT13 Cipher","desc":"Applies the ROT13 Caesar cipher to text.","example":"hello","url":"https://light-api.vercel.app/api/rot13?q="},
+const endpoints = [
   {"name":"Base64 Encode","desc":"Converts text into Base64 encoding.","example":"hello","url":"https://light-api.vercel.app/api/b64ify?q="},
-  {"name":"Base64 Decode","desc":"Converts Base64 back into text.","example":"aGVsbG8=","url":"https://light-api.vercel.app/api/unb64ify?q="},
-  {"name":"Uppercase","desc":"Converts all letters to uppercase.","example":"hello","url":"https://light-api.vercel.app/api/uppercase?q="},
-  {"name":"Lowercase","desc":"Converts all letters to lowercase.","example":"HELLO","url":"https://light-api.vercel.app/api/lowercase?q="},
-  {"name":"Reverse Text","desc":"Reverses the input string.","example":"hello","url":"https://light-api.vercel.app/api/reverse?q="},
-  {"name":"Reverse Words","desc":"Reverses the order of words in the input.","example":"hello world","url":"https://light-api.vercel.app/api/reversewords?q="},
-  {"name":"UwU Text","desc":"Converts normal text into uwu style.","example":"hello","url":"https://light-api.vercel.app/api/uwuify?q="},
-  {"name":"Vaporwave Text","desc":"Converts text into spaced out vaporwave style.","example":"hello","url":"https://light-api.vercel.app/api/vaporwave?q="},
-  {"name":"Zalgo Text","desc":"Adds Zalgo unicode effects to text.","example":"hello","url":"https://light-api.vercel.app/api/zalgo?q="},
-  {"name":"Text to Hex","desc":"Converts text into hexadecimal.","example":"hello","url":"https://light-api.vercel.app/api/hex?q="},
-  {"name":"Fancy Unicode","desc":"Converts text into bold/fancy unicode letters.","example":"hello","url":"https://light-api.vercel.app/api/unicode?q="},
-  {"name":"Decimal to Binary","desc":"Converts decimal numbers into binary strings.","example":"5","url":"https://light-api.vercel.app/api/ntr?q="},
+  {"name":"Binarize","desc":"Converts text into binary representation of each character.","example":"hello","url":"https://light-api.vercel.app/api/binarize?q="},
   {"name":"Binary to Decimal","desc":"Converts binary strings into decimal numbers.","example":"101","url":"https://light-api.vercel.app/api/btd?q="},
+  {"name":"Decimal to Hex","desc":"Converts decimal numbers to hexadecimal.","example":"255","url":"https://light-api.vercel.app/api/bth?q="},
+  {"name":"Capitalize","desc":"Capitalizes the first letter of each word.","example":"hello world","url":"https://light-api.vercel.app/api/capitalize?q="},
+  {"name":"Character Frequency","desc":"Counts frequency of each character in text.","example":"hello","url":"https://light-api.vercel.app/api/charfrequency?q="},
+  {"name":"Doublize","desc":"Duplicates each character in the string.","example":"abc","url":"https://light-api.vercel.app/api/doublize?q="},
+  {"name":"Decimal to Binary","desc":"Converts decimal numbers into binary strings.","example":"5","url":"https://light-api.vercel.app/api/ntr?q="},
   {"name":"Decimal to Octal","desc":"Converts decimal numbers into octal strings.","example":"10","url":"https://light-api.vercel.app/api/dto?q="},
-  {"name":"Octal to Decimal","desc":"Converts octal strings into decimal numbers.","example":"12","url":"https://light-api.vercel.app/api/otd?q="},
   {"name":"Even or Odd","desc":"Determines whether a number is even or odd.","example":"5","url":"https://light-api.vercel.app/api/evenodd?q="},
   {"name":"Factorial","desc":"Calculates the factorial of a number.","example":"5","url":"https://light-api.vercel.app/api/factorial?q="},
   {"name":"Fibonacci","desc":"Returns the first n Fibonacci numbers.","example":"5","url":"https://light-api.vercel.app/api/fibonacci?q="},
   {"name":"GCD / LCM","desc":"Returns the GCD and LCM of two numbers.","example":"12,18","url":"https://light-api.vercel.app/api/gdlcm?q="},
+  {"name":"Hexadecimal","desc":"Converts text into hexadecimal.","example":"hello","url":"https://light-api.vercel.app/api/hex?q="},
   {"name":"Isogram Check","desc":"Checks if a word is an isogram (no repeating letters).","example":"background","url":"https://light-api.vercel.app/api/isogram?q="},
-  {"name":"Longest Word","desc":"Finds the longest word in a string.","example":"hello world","url":"https://light-api.vercel.app/api/longestword?q="},
-  {"name":"Shortest Word","desc":"Finds the shortest word in a string.","example":"hello world","url":"https://light-api.vercel.app/api/shortestword?q="},
-  {"name":"Sentences Split","desc":"Splits text into sentences.","example":"Hello world. How are you?","url":"https://light-api.vercel.app/api/sentences?q="},
-  {"name":"Character Frequency","desc":"Counts frequency of each character in text.","example":"hello","url":"https://light-api.vercel.app/api/charfrequency?q="},
-  {"name":"Percentage Calculator","desc":"Calculates the percentage of a number.","example":"50,200","url":"https://light-api.vercel.app/api/percentage?q="},
-  {"name":"Random Number","desc":"Generates a random number between min and max.","example":"1,100","url":"https://light-api.vercel.app/api/randomnumber?q="},
-  {"name":"Temperature Converter","desc":"Converts temperatures between Celsius and Fahrenheit.","example":"32C","url":"https://light-api.vercel.app/api/temp?q="},
-  {"name":"No Vowels","desc":"Removes all vowels from the input text.","example":"hello","url":"https://light-api.vercel.app/api/novowels?q="},
-  {"name":"Link Extractor","desc":"Extracts all URLs from input text.","example":"Check this https://example.com","url":"https://light-api.vercel.app/api/linkextractor?q="},
-  {"name":"Mention Extractor","desc":"Extracts all @mentions from input text.","example":"Hello @user","url":"https://light-api.vercel.app/api/mentionextractor?q="},
   {"name":"Joke","desc":"Returns a random joke.","example":"","url":"https://light-api.vercel.app/api/joke?q="},
+  {"name":"Leetspeak Conversion","desc":"Converts letters into leet style. a→4, e→3 etc.","example":"hello","url":"https://light-api.vercel.app/api/leet?q="},
+  {"name":"Text Length","desc":"Returns the number of characters in input.","example":"hello","url":"https://light-api.vercel.app/api/length?q="},
+  {"name":"Link Extractor","desc":"Extracts all URLs from input text.","example":"Check this https://example.com","url":"https://light-api.vercel.app/api/linkextractor?q="},
+  {"name":"Longest Word","desc":"Finds the longest word in a string.","example":"hello world","url":"https://light-api.vercel.app/api/longestword?q="},
+  {"name":"Lowercase","desc":"Converts all letters to lowercase.","example":"HELLO","url":"https://light-api.vercel.app/api/lowercase?q="},
+  {"name":"Markdown Escape","desc":"Escapes markdown special characters in text.","example":"Hello **world**","url":"https://light-api.vercel.app/api/markdownescape?q="},
+  {"name":"Mention Extractor","desc":"Extracts all @mentions from input text.","example":"Hello @user","url":"https://light-api.vercel.app/api/mentionextractor?q="},
   {"name":"Most Frequent Word","desc":"Finds the most frequently occurring word in a text.","example":"hello hello world","url":"https://light-api.vercel.app/api/mfw?q="},
+  {"name":"Morse to Emoji","desc":"Converts Morse code to emoji representation.","example":".... . .-.. .-.. ---","url":"https://light-api.vercel.app/api/morseemoji?q="},
+  {"name":"Morse to Text","desc":"Converts Morse code back into readable text. Use '/' for spaces.","example":".... . .-.. .-.. --- / --. ..- -.-- ...","url":"https://light-api.vercel.app/api/mtt?q="},
+  {"name":"No Vowels","desc":"Removes all vowels from the input text.","example":"hello","url":"https://light-api.vercel.app/api/novowels?q="},
+  {"name":"Percentage Calculator","desc":"Calculates the percentage of a number.","example":"50,200","url":"https://light-api.vercel.app/api/percentage?q="},
+  {"name":"Prime Check","desc":"Checks if a number is prime.","example":"13","url":"https://light-api.vercel.app/api/primecheck?q="},
+  {"name":"Random Number","desc":"Generates a random number between min and max.","example":"1,100","url":"https://light-api.vercel.app/api/randomnumber?q="},
   {"name":"Reading Time","desc":"Estimates reading time for a text in minutes.","example":"hello world","url":"https://light-api.vercel.app/api/readingtime?q="},
-  {"name":"Text Length","desc":"Returns the number of characters in input.","example":"hello","url":"https://light-api.vercel.app/api/length?q="}
-]
-
+  {"name":"Reverse Text","desc":"Reverses the input string.","example":"hello","url":"https://light-api.vercel.app/api/reverse?q="},
+  {"name":"Reverse Words","desc":"Reverses the order of words in the input.","example":"hello world","url":"https://light-api.vercel.app/api/reversewords?q="},
+  {"name":"ROT13 Cipher","desc":"Applies the ROT13 Caesar cipher to text.","example":"hello","url":"https://light-api.vercel.app/api/rot13?q="},
+  {"name":"Sentences Split","desc":"Splits text into sentences.","example":"Hello world. How are you?","url":"https://light-api.vercel.app/api/sentences?q="},
+  {"name":"Shortest Word","desc":"Finds the shortest word in a string.","example":"hello world","url":"https://light-api.vercel.app/api/shortestword?q="},
+  {"name":"Swap Case","desc":"Swaps uppercase to lowercase and vice versa.","example":"Hello World","url":"https://light-api.vercel.app/api/swapcase?q="},
+  {"name":"Temperature Converter","desc":"Converts temperatures between Celsius and Fahrenheit.","example":"32C","url":"https://light-api.vercel.app/api/temp?q="},
+  {"name":"Text to Morse","desc":"Converts plain text into Morse code. Spaces are converted to '/'.","example":"hello+guys","url":"https://light-api.vercel.app/api/ttm?q="},
+  {"name":"Base64 Decode","desc":"Converts Base64 back into text.","example":"aGVsbG8=","url":"https://light-api.vercel.app/api/unb64ify?q="},
+  {"name":"Fancy Unicode","desc":"Converts text into bold/fancy unicode letters.","example":"hello","url":"https://light-api.vercel.app/api/unicode?q="},
+  {"name":"Uppercase","desc":"Converts all letters to uppercase.","example":"hello","url":"https://light-api.vercel.app/api/uppercase?q="},
+  {"name":"UwU Text","desc":"Converts normal text into uwu style.","example":"hello","url":"https://light-api.vercel.app/api/uwuify?q="},
+  {"name":"Vaporwave Text","desc":"Converts text into spaced out vaporwave style.","example":"hello","url":"https://light-api.vercel.app/api/vaporwave?q="},
+  {"name":"Word Count","desc":"Counts the number of words in a text.","example":"hello world","url":"https://light-api.vercel.app/api/wordcount?q="},
+  {"name":"Zalgo Text","desc":"Adds Zalgo unicode effects to text.","example":"hello","url":"https://light-api.vercel.app/api/zalgo?q="}
+];
 
 const container = document.getElementById("sections");
-
 endpoints.forEach(ep => {
   const section = document.createElement("div");
   section.className = "section";
-  
   const h2 = document.createElement("h2");
   h2.textContent = ep.name;
-  
   const p = document.createElement("p");
   p.textContent = ep.desc;
-  
   const buttons = document.createElement("div");
   buttons.className = "buttons";
-  
   const exampleBtn = document.createElement("button");
   exampleBtn.textContent = "Example";
   exampleBtn.onclick = () => window.open(ep.url + encodeURIComponent(ep.example), "_blank");
-  
   const copyBtn = document.createElement("button");
   copyBtn.textContent = "Copy Endpoint";
   copyBtn.className = "copy-btn";
   copyBtn.onclick = () => navigator.clipboard.writeText(ep.url).then(()=>alert("Copied!"));
-  
   buttons.appendChild(exampleBtn);
   buttons.appendChild(copyBtn);
   section.appendChild(h2);
@@ -158,10 +158,8 @@ class Star {
     if(this.x<0||this.x>window.innerWidth||this.y<0||this.y>window.innerHeight) this.reset();
   }
 }
-
 const stars = [];
 for(let i=0;i<120;i++) stars.push(new Star());
-
 function animateStars(){stars.forEach(s=>s.move()); requestAnimationFrame(animateStars);}
 animateStars();
 </script>
