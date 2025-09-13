@@ -8,22 +8,16 @@ export default async function handler(req, res) {
     const q = new URL(req.url, `http://${req.headers.host}`).searchParams.get("q") || "";
 
     const filePath = path.join(process.cwd(), "files", `${route}.js`);
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ error: "Unknown endpoint" });
-    }
+    if (!fs.existsSync(filePath)) return res.status(404).json({ error: "Unknown endpoint" });
 
     const mod = await import(pathToFileURL(filePath).href);
-
-    // check the number of parameters the exported function expects
-    const fn = mod.default;
-    if (!fn) return res.status(500).json({ error: "Module does not export a function" });
+    const fn = mod.default || mod; // <-- support both ESM & CommonJS
+    if (typeof fn !== "function") return res.status(500).json({ error: "Module does not export a function" });
 
     if (fn.length >= 2) {
-      // assumes function(req,res) style
-      return fn(req, res);
+      return fn(req, res); // req,res style
     } else {
-      // assumes function(q) style
-      const result = await fn(q);
+      const result = await fn(q); // q style
       return res.status(200).json(result);
     }
 
